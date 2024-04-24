@@ -32,18 +32,19 @@ $resultado_select = $select_prepare->fetchAll(); //aqui se guarda la informacion
 
 if ($_POST) {
 
-    var_dump($_POST);
+    // var_dump($_POST);
     $descripcion = $_POST["descripcion"];
     $titulo = $_POST["titulo"];
     $estado = $_POST["estado"];
     $colorines = $colores[$estado];
+    $fecha_user = $_POST["fecha_user"];
 
-    echo "Colorines :".$colorines;
+    // echo "Colorines :".$colorines;
 
 
-    $insert = "INSERT INTO app (estado, titulo, estado_user, descripcion) values (?,?,?,?)";
+    $insert = "INSERT INTO app (estado, titulo, estado_user, descripcion, fecha_user) values (?,?,?,?,?)";
     $insert_prepare = $conn->prepare($insert);
-    $insert_prepare->execute([$estado, $titulo, $colorines, $descripcion]);
+    $insert_prepare->execute([$estado, $titulo, $colorines, $descripcion, $fecha_user]);
 
     $insert_prepare = null;
     $conn = null;
@@ -84,7 +85,8 @@ if ($_POST) {
                         </div>
 
                         <div class="col-sm-3 text-end">
-                            <a href="index.php?id=<?= $row["id"] ?>&titulo=<?= $row["titulo"] ?>&estado=<?= $row["estado"] ?>&descripcion=<?= $row["descripcion"] ?>">✏️</a>
+                            <span> <?= $row["fecha_user"] ?></span>
+                            <a href="index.php?id=<?= $row["id"] ?>&titulo=<?= $row["titulo"] ?>&estado=<?= $row["estado"] ?>&descripcion=<?= $row["descripcion"] ?>&fecha_user=<?= $row["fecha_user"] ?>">✏️</a>
                             <a href="delete.php?id=<?= $row["id"] ?>">🗑️</a>
                         </div>
                     </div>
@@ -102,13 +104,20 @@ if ($_POST) {
                         <div class="mb-3">
                             <input type="hidden" name="id" value='<?= $_GET['id']?>'>
                             <label for="titulo" class="form-label">Titulo</label>
-                            <input type="text" name="titulo" class="form-control" id="titulo" aria-describedby="titulo" value='<?=$_GET['titulo'] ?>'>
+                            <input type="text" name="titulo" class="form-control" id="titulo" aria-describedby="tituloHelp" value='<?=$_GET['titulo'] ?>'>
+                            <div id="tituloHelp" class="form-text">Titulo de la tarea, máximo 50 caracteres.</div>
                         </div>
                         <div class="mb-3">
                             <input type="hidden" name="id" value='<?= $_GET['id']?>'>
                             <label for="titulo" class="form-label">descripción</label>
-                            <input type="text" name="descripcion" class="form-control" id="descripcion" aria-describedby="descripcion" value='<?=$_GET['descripcion'] ?>'>
+                            <input type="text" name="descripcion" class="form-control" id="descripcion" aria-describedby="descripcionHelp" value='<?=$_GET['descripcion'] ?>'>
+                            <div id="descripcionHelp" class="form-text">Descripción de la tarea, máximo 250 caracteres.</div>
                         </div>
+                        <div class="mb-3">
+                                <label for="fecha_user" class="form-label">Fecha limite</label>
+                                <input type="date" name="fecha_user" class="form-control" id="fecha_user" aria-describedby="fecha_userHelp" value='<?=$_GET["fecha_user"]?>'>
+                                <div id="fecha_userHelp" class="form-text">Fecha limite o de ejecución de la tarea.</div>
+                            </div>
                         <div class="mb-3">
                             <label for="estado" class="form-label">Estado:</label>
                             <select name="estado" id="estado">
@@ -139,11 +148,18 @@ if ($_POST) {
                                 <legend>Introduce los datos</legend>
                             <div class="mb-3">
                                 <label for="titulo" class="form-label">Titulo</label>
-                                <input type="text" name="titulo" class="form-control" id="titulo" aria-describedby="titulo">
+                                <input type="text" name="titulo" class="form-control" id="titulo" aria-describedby="tituloHelp">
+                                <div id="tituloHelp" class="form-text">Titulo de la tarea, máximo 50 caracteres.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="descripcion" class="form-label">Descripción</label>
-                                <input type="text" name="descripcion" class="form-control" id="descripcion" aria-describedby="descripcion">
+                                <input type="text" name="descripcion" class="form-control" id="descripcion" aria-describedby="descripcionHelp">
+                                <div id="descripcionHelp" class="form-text">Descripción de la tarea, máximo 250 caracteres.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fecha_user" class="form-label">Fecha limite</label>
+                                <input type="date" name="fecha_user" class="form-control" id="fecha_user" aria-describedby="fecha_userHelp">
+                                <div id="fecha_userHelp" class="form-text">Fecha limite o de ejecución de la tarea.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="estado" class="form-label">Estado:</label>
