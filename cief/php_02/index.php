@@ -9,6 +9,7 @@ include_once "colores.php";
 
 
 $select = "SELECT * FROM app
+WHERE estado != 'white'
 ORDER BY 
   CASE 
       WHEN estado = 'darkred' THEN 1
@@ -26,7 +27,7 @@ $resultado_select = $select_prepare->fetchAll(); //aqui se guarda la informacion
 
 //var_dump($resultado_select);
 
-/*  foreach($reultado_select as $key => $value) {
+/*  foreach($resultado_select as $key => $value) {
     echo $value['color']. "<br>";
 } */
 
@@ -64,13 +65,24 @@ if ($_POST) {
     <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Organizacion de tareas</title>
+    <title>Organización de tareas</title>
 </head>
 
 <body>
 
     <header>
-        <h1 class="text-center m-5">To Do APP</h1>
+            
+            <div class="navbar-brand" style="display:flex; height: 15vh; align-items: center" >
+                
+            <h1 class="text-center m-5" style="flex-grow: 1; margin: 0;">To Do APP</h1>
+            <a href="deletePage.php">
+            <img style="flex: end" src="img/delete.png" alt="Delete button" width="60" height="60"></a>
+            
+            
+</div>
+       
+
+        
     </header>
 
     <main class="container">
@@ -128,8 +140,8 @@ if ($_POST) {
                             </select>
                         </div>
                         <div class="row gap-3">
-                            <button type="submit" class=" col btn btn-primary">Submit</button>
-                            <button type="reset" class=" col btn btn-danger">Cancel</button>
+                            <button type="submit" class=" col btn btn-primary">Editar</button>
+                            <button type="reset" class=" col btn btn-danger">Limpiar</button>
                         </div>
                         <div class="my-3">
                             <p class="text-center">
@@ -164,15 +176,15 @@ if ($_POST) {
                             <div class="mb-3">
                                 <label for="estado" class="form-label">Estado:</label>
                                 <select name="estado" id="estado">
-                                    <option value="darkred" selected>Urgente</option>
-                                    <option value="darkorange">Pendiente</option>
+                                    <option value="darkred">Urgente</option>
+                                    <option value="darkorange" selected>Pendiente</option>
                                     <option value="darkblue">Ejecutando</option>
                                     <option value="darkgreen">Finalizado</option>
                                 </select>
                             </div>
                             <div class="row gap-3">
-                                <button type="submit" class=" col btn btn-primary">Submit</button>
-                                <button type="reset" class=" col btn btn-danger">Cancel</button>
+                                <button type="submit" class=" col btn btn-primary">Guardar</button>
+                                <button type="reset" class=" col btn btn-danger">Limpiar</button>
                             </div>
                     </form>
                     </fieldset>
