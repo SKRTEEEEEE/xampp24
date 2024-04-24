@@ -1,23 +1,31 @@
-<?php
-
+<?php 
 include_once "connection.php";
-include_once "const.php";
+include_once "colores.php";
 
-$id = $_GET["id"];
-$estado = $_GET["estado"];
-$titulo = $_GET["titulo"];
-$descripcion = $_GET["descripcion"];
-$estadoTrans = $estados[$estado];
-echo "titulo :". $titulo. "estado :".$estado."Id: ".$id."estado: ".$estadoTrans."descripcion: ".$descripcion;
-$update = "UPDATE app SET estado_user = ?, estado = ?, titulo = ?, descripcion = ? WHERE id = ?";
-    //El prepare() y el execute() le dan seguridad a la app
+
+echo $_GET['id'],"<br>";
+echo $_GET['titulo'],"<br>";
+echo $_GET['estado'],"<br>";
+echo $colores[$_GET['estado_user']];
+
+
+
+$id = $_GET['id'];
+$titulo = $_GET['titulo'];
+$estado = $_GET['estado'];
+$colorines = $colores[$estado];
+$descripcion = $_GET['descripcion'];
+
+// select * from info_colores where id = $_GET['id'];
+
+
+
+    $update = "UPDATE app SET titulo = ?, estado = ?, estado_user = ?, descripcion = ? WHERE id = ?";
     $update_prepare = $conn->prepare($update);
-    $update_prepare->execute([ $estados[$estado], $estado, $titulo, $descripcion, $id]);
+    $update_prepare->execute([$titulo, $estado, $colorines, $descripcion ,$id]);
 
     $update_prepare = null;
     $conn = null;
 
-    header("Location: index.php");
 
-
-include_once "connection.php";
+    header("location:index.php");

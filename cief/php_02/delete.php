@@ -1,10 +1,9 @@
-<?php
-
-//Con el metodo get recuperamos el parámetro correspondiente al valor indicado(id) que llega por la url
-$id = $_GET["id"];
-// echo "El id es: ".$id;
-
+<?php 
 include_once "connection.php";
+
+
+$id = $_GET['id'];
+// echo $id;
 
 $delete = "DELETE FROM app WHERE id = ?";
 $delete_prepare = $conn->prepare($delete);
@@ -13,4 +12,4 @@ $delete_prepare->execute([$id]);
 $delete_prepare = null;
 $conn = null;
 
-header("Location: index.php");
+header('location:index.php');
