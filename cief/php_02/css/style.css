@@ -1,0 +1,14 @@
+/* 
+.section1{
+    height: 200px;
+    background-color: aquamarine;
+}
+.section2{
+    height: 300px;
+    background-color: burlywood;
+} */
+
+body a {
+    text-decoration: none !important;
+
+}
