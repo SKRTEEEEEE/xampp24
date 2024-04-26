@@ -4,10 +4,6 @@ include_once "connection.php";
 include_once "colores.php";
 
 
-
-// $colores = ["darkblue"=>"azul", "darkgreen"=>"verde", "darkred" =>"rojo", "black" => "negro", "darkorange" => "naranja" ];
-
-
 $select = "SELECT * FROM app
 WHERE estado != 'white'
 ORDER BY 
@@ -23,24 +19,15 @@ ORDER BY
 $select_prepare = $conn->prepare($select);
 $select_prepare->execute();
 
-$resultado_select = $select_prepare->fetchAll(); //aqui se guarda la informacion de la tabla
-
-//var_dump($resultado_select);
-
-/*  foreach($resultado_select as $key => $value) {
-    echo $value['color']. "<br>";
-} */
+$resultado_select = $select_prepare->fetchAll(); //aquí se guarda la información de la tabla
 
 if ($_POST) {
 
-    // var_dump($_POST);
     $descripcion = $_POST["descripcion"];
     $titulo = $_POST["titulo"];
     $estado = $_POST["estado"];
     $colorines = $colores[$estado];
     $fecha_user = $_POST["fecha_user"];
-
-    // echo "Colorines :".$colorines;
 
 
     $insert = "INSERT INTO app (estado, titulo, estado_user, descripcion, fecha_user) values (?,?,?,?,?)";
@@ -54,8 +41,6 @@ if ($_POST) {
 }
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -72,17 +57,16 @@ if ($_POST) {
 
     <header>
             
-            <div class="navbar-brand" style="display:flex; height: 15vh; align-items: center" >
+        <div class="navbar-brand" style="display:flex; height: 15vh; align-items: center" >
                 
             <h1 class="text-center m-5" style="flex-grow: 1; margin: 0;">To Do APP</h1>
             <a href="deletePage.php">
-            <img style="flex: end" src="img/delete.png" alt="Delete button" width="60" height="60"></a>
+            <img style="flex: end" src="img/delete.png" alt="Delete button" width="60" height="60">
+            </a>
             
             
-</div>
-       
-
-        
+        </div>
+   
     </header>
 
     <main class="container">
