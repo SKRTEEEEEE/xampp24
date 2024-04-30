@@ -8,10 +8,14 @@ require_once('connection.php');
 // var_dump($_POST);
 // echo "</pre>";
 
+// Al recivir el JSON, php lo ha de vovler a pasar a JSON ya que lo recibe como un "documento plano"
+
+$_POST = json_decode(file_get_contents('php://input'), true);
+
 $nombre = $_POST['nombre'];
 $apellidos = $_POST['apellidos'];
-$password1 = $_POST['password1'];
-$password2 = $_POST['password2'];
+$password = $_POST['password'];
+// $password2 = $_POST['password2'];
 $email = $_POST['email'];
 $nif = $_POST['nif'];
 $telefono = $_POST['telefono'];
@@ -21,7 +25,7 @@ $ciudad = $_POST['ciudad'];
 // AQUI VAMOS A CODIFICAR LA CONTRASEÑA
 
 // AQUI ENCRIPTAMOS LA CONTRASEÑA
-$password1 = password_hash($password1, PASSWORD_DEFAULT);
+$password1 = password_hash($password, PASSWORD_DEFAULT);
 // echo strlen($password1);
 
 

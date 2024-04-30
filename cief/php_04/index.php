@@ -38,8 +38,8 @@
 
             <section id="signup">
                 <h2>Por favor, introduzca sus datos</h2>
-                <!-- id="signupForm" -->
-                <form action="php/signup.php" method="post" >
+                <form id="signupForm" >
+                <!-- <form action="php/signup.php" method="post" > -->
                     <fieldset class="form2">
                         <legend>Datos personales</legend>
                         <div>
@@ -64,7 +64,7 @@
                         <div id="errorPassword"></div>
                         <div>
                             <label for="email">Email:</label>
-                            <input type="email" name="email" id="email" required />
+                            <input type="email" name="email" id="emailUp" required />
                         </div>
                     </fieldset>
 

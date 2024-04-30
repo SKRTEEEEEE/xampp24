@@ -33,8 +33,8 @@ main -> temp, temp_min, temp_max, feels_like, humidity
     <title>City Meteo</title>
     <style>
         .icono{
-            width: 20vw;
-            height: 20vh;
+            width: 30vw;
+            height: 30vh;
         }
         .flex{
             display: flex;
@@ -66,8 +66,12 @@ main -> temp, temp_min, temp_max, feels_like, humidity
         p{
             font-size: 1.5rem;
         }
+        h1{
+            font-size: 3rem;
+        }
         main{
-            background-color: #ffffffec;
+            background-color: #000000ec;
+            color: white
         }
         body{
             
@@ -75,6 +79,21 @@ main -> temp, temp_min, temp_max, feels_like, humidity
             justify-content: center;
             align-content: center;
         }
+        .details-box{
+            display: flex;
+            height: 20vh;
+            width: 95vw;
+            margin-top:24px;
+            padding-left:24px;
+            align-items: center;
+            @media (max-width: 768px) {
+                flex-direction: column;
+                height: auto;
+            }
+        }
+
+
+
     </style>
 </head>
 <body style="<?php
@@ -100,16 +119,24 @@ main -> temp, temp_min, temp_max, feels_like, humidity
     <?php if(isset($jsonMeteo["name"]) ) : ?>
     <article>
         <section class="flex">
-        <h1>El tiempo de: <?= $ciudad ?></h1>
-    <img class="icono" src="<?= $ruta_icons.$nombre_icon ?>.svg" alt="icono del tiempo">
-    
-    <p>"<i> <?= $jsonMeteo["weather"][0]["description"] ?></i>"</p>
-    </section>
-        <section class="flex-md-col">
             <div>
+        <h1>El tiempo de: <?= $ciudad ?> hoy</h1>
+        <p><i><?= $jsonMeteo["weather"][0]["description"] ?></i></p></div>
+        <img class="icono" src="<?= $ruta_icons.$nombre_icon ?>.svg" alt="icono del tiempo">
+        <div>
                 <h2>Temperatura 🌡️</h2>
                 <p><?= $jsonMeteo["main"]["temp"] ?> ºC</p>
             </div>
+        
+    
+    
+    </section>
+    <section class="details-box">
+        
+            
+            <details>
+            <summary class="details">Ver detalles del tiempo</summary>
+            <section class="flex-md-col">
             <div>
                 <h2>Temperatura minima ➖</h2>
                 <p><?= $jsonMeteo["main"]["temp_min"] ?> ºC</p>
@@ -125,9 +152,9 @@ main -> temp, temp_min, temp_max, feels_like, humidity
             <div>
                 <h2>Humedad 💧</h2>
                 <p><?= $jsonMeteo["main"]["humidity"] ?> %</p>
-            </div>
-            
-    </section>
+            </div></section>
+            </details></section>
+    
     </article>
     <?php else :?>
         <p>Ciudad incorrecta</p>

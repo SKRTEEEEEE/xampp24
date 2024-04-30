@@ -118,7 +118,7 @@ if ($_POST) {
                             <label for="estado" class="form-label">Estado:</label>
                             <select name="estado" id="estado">
                                 <option value="darkred" <?php if ($_GET['estado'] == "darkred") echo "selected" ?>>Urgente</option>
-                                <option value="darkorange" <?php if ($_GET['estado'] == "darkorange") echo "selected" ?>>Pendiente</option>
+                                <option value="darkorange" <?php if ($_GET['estado'] == "darkorange" || $_GET['estado'] == "white") echo "selected" ?>>Pendiente</option>
                                 <option value="darkblue" <?php if ($_GET['estado'] == "darkred") echo "selected" ?>>Ejecutando</option>
                                 <option value="darkgreen" <?php if ($_GET['estado'] == "darkgreen") echo "selected" ?>>Finalizado</option>
                             </select>
