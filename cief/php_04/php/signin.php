@@ -30,6 +30,7 @@ $password_hash = $result['password'];
 
 if (password_verify($password_user, $password_hash)) {
     // echo "Usuario y contraseña correcto";
+    $_SESSION["email"] = $email;
     $_SESSION['nombre_cliente'] = $result['nombre_cliente'];
     $_SESSION['apellido_cliente'] = $result['apellido_cliente'];
     // echo 'usuario: '.$_SESSION['nombre_cliente'];

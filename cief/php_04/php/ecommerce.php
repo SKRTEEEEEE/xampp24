@@ -3,11 +3,12 @@
 session_start();
 
 require_once('connection.php');
+echo "Email :".$_SESSION["email"]." Nombre cliente :".$_SESSION["nombre_cliente"];
 
 
-if(!isset($_SESSION["nombre_cliente"])){
+if(!isset($_SESSION["email"])){
 
-header('Location: ../index.php');
+    header('Location: ../index.php');
 
 } 
 ?>
@@ -17,7 +18,7 @@ header('Location: ../index.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>E-Commerce</title>
 </head>
 <body>
     <main><a href="logout.php">Cerrar session</a></main>

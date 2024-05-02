@@ -10,10 +10,6 @@ function volverInicio() {
     document.getElementById("signin").style.display = "block";
     document.getElementById("signup").style.display = "none";
 }
-function decirHola(nombre,apellido){
-    return `Hola ${nombre}, ${apellido}`
-}
-
 
 const signupForm = document.getElementById("signupForm");
 
@@ -33,10 +29,10 @@ signupForm.addEventListener("submit", (e) => {
     const telefono = formData.get("telefono").trim();
     const direccion = formData.get("direccion").trim();
     const ciudad = formData.get("ciudad").trim();
-    const paternNotNumbers = /^[a-zA-záéíóúàèìòùñÑçÇÁÉÍÓÚÙÒÌÈÀ\s]+$/;
+    const paternNotNumbers = /^[a-zA-záéíóúàèìòùñÑçÇÁÉÍÓÚÙÒÌÈÀ'\s]+$/;
     const paternNif = /[0-9A-Z][0-9]{7}[0-9]/;
     const paternTel = /[0-9]{9}/
-    const paternDireccion = /^[a-zA-záéíóúàèìòùñÑçÇÁÉÍÓÚÙÒÌÈÀ0-9\s,-\/ºª]+$/
+    const paternDireccion = /^[a-zA-záéíóúàèìòùñÑçÇÁÉÍÓÚÙÒÌÈÀ0-9'\s,-\/ºª]+$/
     let stopProcess = false;
     if(!validarItems("nombre",nombre, paternNotNumbers)){
         stopProcess = true ;
@@ -46,7 +42,6 @@ signupForm.addEventListener("submit", (e) => {
     };
     if (password1 !== password2) {
         document.getElementById("error-password").innerHTML = "<p> Las contraseñas no coinciden </p>";
-        // password2 = document.getElementById("password2").value;
         password = password1;
         stopProcess = true;
     }
@@ -57,10 +52,10 @@ signupForm.addEventListener("submit", (e) => {
     } else if(nif.length > 9){
         document.getElementById("error-nif").innerHTML = "<p> El NIF es mas grande de 9 </p>";
         document.getElementById(`error-nif`).style.backgroundColor = "red";
-        stopProcess = true;
-    } else {
-        if(validarItems("nif", nif, paternNif)) { (document.getElementById("error-nif").innerHTML = "<p> Patron valido </p>")}else{stopProcess=true};
-    }
+        stopProcess = true;}
+    // } else {
+    //     if(!validarItems("nif", nif, paternNif)) { (document.getElementById("error-nif").innerHTML = "<p> Patron valido </p>")}else{stopProcess=true};
+    // }
     if(!validarItems("telefono", telefono, paternTel)){
         stopProcess = true ;
     }
@@ -74,13 +69,6 @@ signupForm.addEventListener("submit", (e) => {
         return;
     }
 
-
-    // Generar el objeto con los datos
-      
-
-    // const data = {
-    //     nombre,
-    // }
     let data = {
         nombre, apellidos, password, email, nif, telefono, direccion, ciudad
     }
@@ -96,10 +84,10 @@ signupForm.addEventListener("submit", (e) => {
         body: JSON.stringify(data)
     })
         .then(response => response.text())
-        .then(data => {
-            console.log("res :", data);
-            // alert("Usuario creado correctamente");
-            // window.location.href = "login.html";
+        .then(() => {
+            // console.log("res :", data);
+            alert("Usuario creado correctamente");
+            location.href = "php/ecommerce.php";
         })
         .catch(error => {
             console.error(error);
@@ -107,7 +95,7 @@ signupForm.addEventListener("submit", (e) => {
         });
 
     
-    // signupForm.reset();
+    signupForm.reset();
 });
 const preps = ["de", "del", "el", "la", "los", "las"];
 
@@ -143,13 +131,3 @@ function parseName(nombre) {
 
     return respuestaNombre.trim(); // Eliminar espacios adicionales al final y al inicio
 }
-
-
-
-
-// let nombre = {
-//     "nombre": "Adan",
-//     "apellido": "Reh",
-// }
-// decirHola("Adan", "Reh");
-// decirHola(nombre.nombre, nombre.apellido);
