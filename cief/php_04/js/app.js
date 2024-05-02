@@ -10,68 +10,118 @@ function volverInicio() {
     document.getElementById("signin").style.display = "block";
     document.getElementById("signup").style.display = "none";
 }
+function decirHola(nombre,apellido){
+    return `Hola ${nombre}, ${apellido}`
+}
 
 
 const signupForm = document.getElementById("signupForm");
 
 signupForm.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    let nombre = document.getElementById("nombre").value.trim();
-    const nombreP = parseName(nombre);
-    let apellido = document.getElementById("apellidos").value.trim();
-    const apellidoP = parseName(apellido);
-    let email = document.getElementById("email").value.trim();
-    let nif = document.getElementById("nif").value.trim();
-    let direccion = document.getElementById("direccion").value.trim();
-    let ciudad = document.getElementById("ciudad").value.trim();
-    let telefono = document.getElementById("telefono").value.trim();
-
-    
-    
-
-    const password1 = document.getElementById("password1").value;
-    document.getElementById("password2").value;
-
-    if (password1!== password2) {
-        document.getElementById("errorPassword").innerHTML = "<p> Las contraseñas no coinciden </p>";
-        password2 = document.getElementById("password2").value;
-
+  
+    //Obtener datos del formulario
+    const formData = new FormData(signupForm);
+    //Obtener cada valor
+    const nombre = parseName(formData.get("nombre").trim());
+    const apellidos = parseName(formData.get("apellidos").trim());
+    const password1 = formData.get("password1");
+    const password2 = formData.get("password2");
+    let password;
+    const email = formData.get("email");
+    const nif = formData.get("nif").toUpperCase().trim();
+    const telefono = formData.get("telefono").trim();
+    const direccion = formData.get("direccion").trim();
+    const ciudad = formData.get("ciudad").trim();
+    const paternNotNumbers = /^[a-zA-záéíóúàèìòùñÑçÇÁÉÍÓÚÙÒÌÈÀ\s]+$/;
+    const paternNif = /[0-9A-Z][0-9]{7}[0-9]/;
+    const paternTel = /[0-9]{9}/
+    const paternDireccion = /^[a-zA-záéíóúàèìòùñÑçÇÁÉÍÓÚÙÒÌÈÀ0-9\s,-\/ºª]+$/
+    let stopProcess = false;
+    if(!validarItems("nombre",nombre, paternNotNumbers)){
+        stopProcess = true ;
+    }
+    if(!validarItems("apellidos",apellidos, paternNotNumbers)){
+        stopProcess = true ;
+    };
+    if (password1 !== password2) {
+        document.getElementById("error-password").innerHTML = "<p> Las contraseñas no coinciden </p>";
+        // password2 = document.getElementById("password2").value;
+        password = password1;
+        stopProcess = true;
+    }
+    if(nif.length < 9){
+        document.getElementById("error-nif").innerHTML = "<p> El NIF es mas pequeño de 9 </p>";
+        document.getElementById(`error-nif`).style.backgroundColor = "red";
+        stopProcess = true;
+    } else if(nif.length > 9){
+        document.getElementById("error-nif").innerHTML = "<p> El NIF es mas grande de 9 </p>";
+        document.getElementById(`error-nif`).style.backgroundColor = "red";
+        stopProcess = true;
+    } else {
+        if(validarItems("nif", nif, paternNif)) { (document.getElementById("error-nif").innerHTML = "<p> Patron valido </p>")}else{stopProcess=true};
+    }
+    if(!validarItems("telefono", telefono, paternTel)){
+        stopProcess = true ;
+    }
+    if(!validarItems("direccion", direccion, paternDireccion)){
+        stopProcess = true ;
+    }
+    if(!validarItems("ciudad", ciudad, paternNotNumbers)){
+        stopProcess = true ;
+    }
+    if(stopProcess){
         return;
     }
 
-    let datos = {
-        "nombre": nombreP,
-        "apellido": apellidoP,
-        "email": email,
-        "nif": nif,
-        "direccion": direccion,
-        "ciudad": ciudad,
-        "password": password1,
-        "telefono": telefono,
+
+    // Generar el objeto con los datos
+      
+
+    // const data = {
+    //     nombre,
+    // }
+    let data = {
+        nombre, apellidos, password, email, nif, telefono, direccion, ciudad
     }
-    fetch("../php/signup.php", {
+    
+
+    //Enviar el objeto con los datos, el fetch() se ejecuta desde la raíz.
+    fetch("php/signup.php", {
         method: "POST",
+        //Le indicamos que el body va ( "plano/ en string" ) en JSON string
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(datos)
+        body: JSON.stringify(data)
     })
-        // .then(response => response.json())
-        // .then(data => {
-        //     console.log(data);
-        //     alert("Usuario creado correctamente");
-        //     window.location.href = "login.html";
-        // })
-        // .catch(error => {
-        //     console.error(error);
-        //     alert("Error al crear el usuario");
-        // });
-    
+        .then(response => response.text())
+        .then(data => {
+            console.log("res :", data);
+            // alert("Usuario creado correctamente");
+            // window.location.href = "login.html";
+        })
+        .catch(error => {
+            console.error(error);
+            // alert("Error al crear el usuario");
+        });
+
     
     // signupForm.reset();
 });
-const preps = ["de", "del", "el", "la", "los", "las"]
+const preps = ["de", "del", "el", "la", "los", "las"];
+
+function validarItems(lit, texto, patern){
+    if (patern.test(texto)) {
+        console.log(lit, " correcto");
+        return true;
+     } else {
+         console.log(lit, " incorrecto");
+         document.getElementById(`error-${lit}`).innerHTML = `<p> El ${lit} no es correcto </p>`;
+         document.getElementById(`error-${lit}`).style.backgroundColor = "red";
+         return false;
+     }
+}
 
 function parseName(nombre) {
     const names = nombre.split(" ");
@@ -93,3 +143,13 @@ function parseName(nombre) {
 
     return respuestaNombre.trim(); // Eliminar espacios adicionales al final y al inicio
 }
+
+
+
+
+// let nombre = {
+//     "nombre": "Adan",
+//     "apellido": "Reh",
+// }
+// decirHola("Adan", "Reh");
+// decirHola(nombre.nombre, nombre.apellido);

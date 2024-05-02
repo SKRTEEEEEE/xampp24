@@ -44,30 +44,27 @@
                         <legend>Datos personales</legend>
                         <div>
                             <label for="nombre">Nombre:</label>
-                            <input type="text" name="nombre" id="nombre"  autofocus />
-                            <div id="error-nombre"></div>
+                            <input type="text" name="nombre" id="nombre" required min="2" max="20" autofocus />
                         </div>
 
                         <div>
                             <label for="apellidos">Apellidos:</label>
-                            <input type="text" name="apellidos" id="apellidos"  />
-                            <div id="error-apellidos"></div>
+                            <input type="text" name="apellidos" id="apellidos" required min="2" max="50" />
                         </div>
 
                         <div>
                             <label for="password1">Contraseña elegida:</label>
-                            <input type="password" name="password1" id="password1" />
+                            <input type="password" name="password1" id="password1" required min="8" max="20" />
                         </div>
 
                         <div>
                             <label for="password2">Confirme la contraseña:</label>
-                            <input type="password" name="password2" id="password2"  />
-                            <div id="error-password"></div>
+                            <input type="password" name="password2" id="password2" required min="8" max="20" />
                         </div>
-                        
+                        <div id="errorPassword"></div>
                         <div>
                             <label for="email">Email:</label>
-                            <input type="email" name="email" id="emailUp"  />
+                            <input type="email" name="email" id="emailUp" required />
                         </div>
                     </fieldset>
 
@@ -75,26 +72,22 @@
                         <legend>Datos de la compra</legend>
                         <div>
                             <label for="nif">NIF:</label><br>
-                            <input type="text" name="nif" id="nif" />
-                            <div id="error-nif"></div>
+                            <input type="text" name="nif" id="nif" required min="9" max="9" />
                         </div>
 
                         <div>
                             <label for="telefono">Teléfono</label>
-                            <input type="text" name="telefono" id="telefono" />
-                            <div id="error-telefono"></div>
+                            <input type="text" name="telefono" id="telefono" required min="9" max="9" />
                         </div>
 
                         <div>
                             <label for="direccion">Dirección:</label>
-                            <input type="text" name="direccion" id="direccion"  />
-                            <div id="error-direccion"></div>
+                            <input type="text" name="direccion" id="direccion" required />
                         </div>
 
                         <div>
                             <label for="ciudad">Ciudad</label>
-                            <input type="text" name="ciudad" id="ciudad" />
-                            <div id="error-ciudad"></div>
+                            <input type="text" name="ciudad" id="ciudad" min="2" max="20" />
                         </div>
                     </fieldset>
                     <div class="div_botones">
