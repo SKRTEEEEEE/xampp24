@@ -8,10 +8,18 @@ $pass = $_POST["password"];
 
 $encontrado = false;
 
+function calcularEdad($fecha)
+{
+    $fecha_nacimiento = new DateTime($fecha);
+    $hoy = new DateTime();
+    $edad = $hoy->diff($fecha_nacimiento);
+    return $edad->y;
+}
+
 foreach ($empleados as $empleado) {
     // echo $empleado['email'] . ' ' . $empleado['key'] . ' ' . '<br>';
     if ($empleado['email'] == $user && $empleado['key'] == $pass) {
-        echo 'Bienvenido ' . $empleado['name'] . " " . $empleado["surname"] . '<br> Nacido: ' . $empleado["dateBirth"] . '<br> Email: ' . $empleado["email"];
+        echo 'Bienvenido ' . $empleado['name'] . " " . $empleado["surname"] . '<br> Edad: ' . calcularEdad($empleado["dateBirth"]) . ' años. <br> Email: ' . $empleado["email"];
         $encontrado = true;
         break;
     } 
